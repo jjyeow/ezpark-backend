@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from models.user import User
 
 
 users_blueprint = Blueprint('users',
@@ -13,7 +14,6 @@ def new():
 
 @users_blueprint.route('/', methods=['POST'])
 def create():
-
     pass
 
 
