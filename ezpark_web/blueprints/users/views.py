@@ -13,6 +13,7 @@ def new():
 
 @users_blueprint.route('/', methods=['POST'])
 def create():
+
     pass
 
 
