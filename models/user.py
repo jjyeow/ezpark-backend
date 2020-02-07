@@ -29,7 +29,7 @@ class User(BaseModel):
             self.errors.append('Password must have at least 1 number!')
         elif re.search('[A-Z]', self.password) is None:
             self.errors.append('Password must have at least 1 capital letter!')
-        elif re.search("[$&+,:;=?@#\"\\/|'<>.^*()%!-]", self.password) is None:
+        elif re.search("[$&+,_:;=?@#\"\\/|'<>.^*()%!-]", self.password) is None:
             self.errors.append('Password must have at least 1 special character!')
 
         self.password = generate_password_hash(self.password)
