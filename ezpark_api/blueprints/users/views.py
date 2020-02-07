@@ -48,7 +48,7 @@ def login():
 
     if user: 
         if check_password_hash(user.password, password):
-             access_token = create_access_token(identity=username)
+             access_token = create_access_token(identity=user.id)
              responseObj = {
                  'status': 'success',
                  'message': 'Login successfully!',
@@ -72,38 +72,32 @@ def login():
 
         return jsonify(responseObj), 400
 
-@users_api_blueprint.route('/edit_username/<id>', methods=['POST'])
+@users_api_blueprint.route('/edit_username/', methods=['POST'])
 @jwt_required
 def edit_username(id):
-    username = get_jwt_identity()
-    current_user = User.get_or_none(username = username)
-    user = User.get_or_none(id)
+    user_id = get_jwt_identity()
+    # decrypt jwt, get current_user_id
+    current_user = User.get_or_none(id = user_id)
+    # user = User.get_or_none(id)
 
-    if current_user == user: 
-        new_username = request.json.get('new_username')
-        update = User.update(username = new_username).where(User.id == current_user.id)
+    new_username = request.json.get('new_username')
+    update = User.update(username = new_username).where(User.id == current_user.id)
 
-        if update.execute():
-            responseObj = {
-                'status': 'success',
-                'message': 'Username updated successfully',
-                'user': {"id": int(user.id), "username": user.username, "email": user.email, "first_name": user.first_name, "last_name": user.last_name, "hp_number": user.hp_number}
-            }
+    if update.execute():
+        responseObj = {
+            'status': 'success',
+            'message': 'Username updated successfully',
+            'user': {"id": int(user.id), "username": user.username, "email": user.email, "first_name": user.first_name, "last_name": user.last_name, "hp_number": user.hp_number}
+        }
 
-            return jsonify(responseObj), 200
-        
-        else: 
-            responseObj = {
-                'status': 'failed',
-                'message': 'Username failed to update'
-            }
-
-            return jsonify(responseObj), 400
-
+        return jsonify(responseObj), 200
+    
     else: 
         responseObj = {
             'status': 'failed',
-            'message': 'You can\'t update someone\'s profile!'
+            'message': 'Username failed to update'
         }
-        
+
         return jsonify(responseObj), 400
+
+ 
