@@ -1,6 +1,7 @@
 from flask import Blueprint, request, json, jsonify
 from models.user import User
-
+from werkzeug.security import check_password_hash
+from flask_jwt_extended import create_access_token
 
 users_api_blueprint = Blueprint('users_api',
                              __name__,
@@ -35,6 +36,38 @@ def create():
         responseObj = {
             'status': 'failed',
             'message': user.errors
+        }
+
+        return jsonify(responseObj), 400
+
+@users_api_blueprint.route('/login', methods=['POST'])
+def login():
+    username = request.json.get('username', None)
+    password = request.json.get('password', None)
+    user = User.get_or_none(username=username)
+
+    if user: 
+        if check_password_hash(user.password, password):
+             access_token = create_access_token(identity=username)
+             responseObj = {
+                 'status': 'success',
+                 'message': 'Login successfully!',
+                 'token': access_token,
+                 'user': {"id": int(user.id), "username": user.username, "email": user.email, "first_name": user.first_name, "last_name": user.last_name, "hp_number": user.hp_number}
+             }
+
+             return jsonify(responseObj), 200
+        else: 
+            responseObj = {
+                'status': 'failed',
+                'message': 'Login failed!'
+                }
+            return jsonify(responseObj), 400
+    
+    else: 
+        responseObj = {
+            'status': 'failed',
+            'message': 'Username is incorrect'
         }
 
         return jsonify(responseObj), 400
