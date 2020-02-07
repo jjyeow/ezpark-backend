@@ -74,7 +74,7 @@ def login():
 
 @users_api_blueprint.route('/edit_username', methods=['POST'])
 @jwt_required
-def edit_username(id):
+def edit_username():
     user_id = get_jwt_identity()
     # decrypt jwt, get current_user_id
     current_user = User.get_or_none(id = user_id)
