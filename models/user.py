@@ -33,3 +33,16 @@ class User(BaseModel):
             self.errors.append('Password must have at least 1 special character!')
 
         self.password = generate_password_hash(self.password)
+
+    def standard_hp(self):
+        if re.search('[+-]', self.hp_number) is None: 
+            return self.hp_number
+        else:
+            hp = self.hp_number
+            hp = hp.replace("-", "")
+            hp = hp.replace("+", "")
+            if hp[0] == "6":
+                hp = hp.replace("6", "", 1) 
+                return hp   
+            else: 
+                hp   
