@@ -72,7 +72,7 @@ def login():
 
         return jsonify(responseObj), 400
 
-@users_api_blueprint.route('/edit_username/', methods=['POST'])
+@users_api_blueprint.route('/edit_username', methods=['POST'])
 @jwt_required
 def edit_username(id):
     user_id = get_jwt_identity()
