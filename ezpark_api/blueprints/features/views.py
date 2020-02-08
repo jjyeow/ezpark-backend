@@ -14,7 +14,7 @@ def index():
     malls = Mall.select()
     malls_name_arr = [] 
     for mall in malls:
-        malls_name_arr.append(mall.outlet)
+        malls_name_arr.append({"name": mall.outlet})
 
     responseObj = {
         'status': 'success',
