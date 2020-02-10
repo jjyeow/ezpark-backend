@@ -3,6 +3,7 @@ from models.mall import Mall
 from models.history import History
 from models.parking import Parking
 from models.floor import Floor
+from models.user import User
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
