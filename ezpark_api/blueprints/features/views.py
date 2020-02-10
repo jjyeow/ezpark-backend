@@ -57,7 +57,7 @@ def history():
     else: 
         responseObj = {
             'status': 'success',
-            'history': 'No history'
+            'history': history_arr
         }
         
         return jsonify(responseObj), 200
