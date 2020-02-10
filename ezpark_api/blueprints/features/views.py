@@ -81,9 +81,22 @@ def history_delete(id):
     user_id = get_jwt_identity()
     history = History.get_by_id(id)
     if history.delete_instance():
+        history_obj = History.select().where(user_id == user_id)
+        history_arr = []
+        if history_obj: 
+            for history in history_obj: 
+                history_list = {
+                    'mall': Mall.get_by_id(Floor.get_by_id(Parking.get_by_id(history.parking_id).floor_id).mall_id).outlet,
+                    'floor': Floor.get_by_id(Parking.get_by_id(history.parking_id).floor_id).floor,
+                    'parking': Parking.get_by_id(history.parking_id).parking_num,
+                    'start': history.created_at,
+                    'id': history.id
+                }
+                history_arr.append(history_list)
+
         responseObj= {
             'status': 'success',
-            'message': 'Successfully deleted!'
+            'history': history_arr 
         }
 
         return jsonify(responseObj), 200
