@@ -66,7 +66,8 @@ def history():
 @jwt_required
 def history_delete(id):
     user_id = get_jwt_identity()
-    query = History.delete_instance().where(History.id == id)
+    history = History.get_by_id(id)
+    query = history.delete_instance()
 
     if query.execute():
         responseObj= {
