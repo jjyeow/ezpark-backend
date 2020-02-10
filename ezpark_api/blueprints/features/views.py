@@ -78,10 +78,9 @@ def history_delete(id):
 
     else: 
         responseObj = {
-            responseObj = {
-                'status': 'failed',
-                'message': 'Failed to delete history!'
-            }
+            'status': 'failed',
+            'message': 'Failed to delete history!'
+        
         }
 
         return jsonify(responseObj), 400
