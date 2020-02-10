@@ -37,7 +37,7 @@ def history():
     for history in history_obj: 
         history_list = {
             'floor': Floor.get_by_id(Parking.get_by_id(history.parking_id).floor_id).floor,
-            'parking': Parking.get_by_id(history.parking_id).parking_num
+            'parking': Parking.get_by_id(history.parking_id).parking_num,
             'start': history.created_at
         }
         history_arr.append(history_list)
