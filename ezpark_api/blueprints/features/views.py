@@ -26,7 +26,7 @@ def index():
 
     return jsonify(responseObj), 200
 
-@features_api_blueprint.route('/history', methods=['POST'])
+@features_api_blueprint.route('/history', methods=['GET'])
 @jwt_required
 def history(): 
     user_id = get_jwt_identity()
@@ -34,15 +34,17 @@ def history():
     history_obj = History.select().where(user_id == user_id)
     history_arr = []
 
-    for history in history_obj: 
+    
+
+    if history_obj: 
+        for history in history_obj: 
         history_list = {
             'floor': Floor.get_by_id(Parking.get_by_id(history.parking_id).floor_id).floor,
             'parking': Parking.get_by_id(history.parking_id).parking_num,
             'start': history.created_at
         }
         history_arr.append(history_list)
-
-    if history_obj: 
+        
         responseObj = {
             'status': 'success',
             'history': history_arr
