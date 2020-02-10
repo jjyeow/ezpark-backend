@@ -28,6 +28,7 @@ def index():
 
     return jsonify(responseObj), 200
 
+
 @features_api_blueprint.route('/history', methods=['GET'])
 @jwt_required
 def history(): 
@@ -61,6 +62,18 @@ def history():
         }
         
         return jsonify(responseObj), 200
+
+
+@features_api_blueprint.route('/history_add', methods=['POST'])
+@jwt_required
+def history_add():
+    user_id = get_jwt_identity()
+    parking_id = [1,2,3,4,5,6,7,8]
+
+    for parking in parking_id: 
+        parking_inst = Parking(user_id = user_id, parking_id = parking)
+        parking_inst.save()
+    
 
 @features_api_blueprint.route('/history_delete/<id>', methods=['POST'])
 @jwt_required
