@@ -26,7 +26,7 @@ def index():
 
     return jsonify(responseObj), 200
 
-@features_api_blueprint.route('/history', methods=['GET'])
+@features_api_blueprint.route('/history', methods=['POST'])
 @jwt_required
 def history(): 
     user_id = get_jwt_identity()
