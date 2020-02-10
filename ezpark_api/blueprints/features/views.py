@@ -4,6 +4,7 @@ from models.history import History
 from models.parking import Parking
 from models.floor import Floor
 from models.user import User
+from models.mall import Mall
 from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
@@ -35,11 +36,10 @@ def history():
     history_obj = History.select().where(user_id == user_id)
     history_arr = []
 
-    
-
     if history_obj: 
         for history in history_obj: 
             history_list = {
+                'mall': Mall.get_by_id(Floor.get_by_id(Parking.get_by_id(history.parking_id).floor_id).mall_id).outlet,
                 'floor': Floor.get_by_id(Parking.get_by_id(history.parking_id).floor_id).floor,
                 'parking': Parking.get_by_id(history.parking_id).parking_num,
                 'start': history.created_at
