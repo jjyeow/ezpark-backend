@@ -63,9 +63,10 @@ def history():
         return jsonify(responseObj), 200
 
 @features_api_blueprint.route('/history_delete/<id>', methods=['POST'])
+@jwt_required
 def history_delete(id):
+    user_id = get_jwt_identity()
     history = History.get_by_id(id)
-
     if history.delete_instance():
         responseObj= {
             'status': 'success',
