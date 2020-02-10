@@ -71,8 +71,8 @@ def history_add():
     parking_id = [1,2,3,4,5,6,7,8]
 
     for parking in parking_id: 
-        parking_inst = Parking(user_id = user_id, parking_id = parking)
-        parking_inst.save()
+        history_inst = History(user_id = user_id, parking_id = parking)
+        history_inst.save()
     
 
 @features_api_blueprint.route('/history_delete/<id>', methods=['POST'])
