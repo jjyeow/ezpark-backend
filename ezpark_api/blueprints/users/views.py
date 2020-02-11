@@ -50,7 +50,7 @@ def login():
 
     if user: 
         if check_password_hash(user.password, password):
-             access_token = create_access_token(identity=user.id)
+             access_token = create_access_token(identity=user.id, expires_delta=False)
              responseObj = {
                  'status': 'success',
                  'message': 'Login successfully!',
