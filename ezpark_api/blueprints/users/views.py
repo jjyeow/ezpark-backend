@@ -97,7 +97,7 @@ def edit_username():
         responseObj = {
             'status': 'success',
             'message': 'Username updated successfully',
-            'user': {"id": int(current_user.id), "username": current_user.username, "email": current_user.email, "first_name": current_user.first_name, "last_name": current_user.last_name, "hp_number": current_user.hp_number}
+            'user': {"id": int(current_user.id), "username": new_username, "email": current_user.email, "first_name": current_user.first_name, "last_name": current_user.last_name, "hp_number": current_user.hp_number}
         }
 
         return jsonify(responseObj), 200
@@ -178,7 +178,7 @@ def edit_email():
             responseObj = {
                 'status': 'success',
                 'message': 'Email updated successfully',
-                'user': {"id": int(current_user.id), "username": current_user.username, "email": current_user.email, "first_name": current_user.first_name, "last_name": current_user.last_name, "hp_number": current_user.hp_number}
+                'user': {"id": int(current_user.id), "username": current_user.username, "email": new_email, "first_name": current_user.first_name, "last_name": current_user.last_name, "hp_number": current_user.hp_number}
             }
             return jsonify(responseObj), 200
         
