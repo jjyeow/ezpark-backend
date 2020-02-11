@@ -197,7 +197,7 @@ def edit_email():
 
         return jsonify(responseObj), 400 
 
-@users_api_blueprint.route('current_user', methods = ['GET'])
+@users_api_blueprint.route('/current_user', methods = ['GET'])
 @jwt_required
 def current_user():
     user_id = get_jwt_identity()
