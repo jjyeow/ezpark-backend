@@ -34,7 +34,7 @@ def index():
 def history(): 
     user_id = get_jwt_identity()
     current_user = User.get_by_id(user_id)
-    history_obj = History.select().where(user_id == user_id)
+    history_obj = History.select().where(user_id == user_id).order_by(History.id.desc())
     history_arr = []
 
     if history_obj: 
