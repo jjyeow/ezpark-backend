@@ -110,6 +110,60 @@ def edit_username():
 
         return jsonify(responseObj), 400
 
+@users_api_blueprint.route('/edit_firstname', methods=['POST'])
+@jwt_required
+def edit_firstname():
+    user_id = get_jwt_identity()
+    current_user = User.get_or_none(User.id==user_id)
+    errors = []
+    new_firstname = request.json.get('new_firstname')
+
+    update = User.update(first_name = new_firstname).where(User.id == current_user.id)
+
+    if update.execute():
+        responseObj = {
+            'status': 'success',
+            'message': 'First name updated successfully',
+            'user': {"id": int(current_user.id), "username": current_user.username, "email": current_user.email, "first_name": new_firstname, "last_name": current_user.last_name, "hp_number": current_user.hp_number}
+        }
+
+        return jsonify(responseObj), 200
+    
+    else: 
+        responseObj = {
+            'status': 'failed',
+            'message': 'First name failed to update'
+        }
+
+        return jsonify(responseObj), 400
+
+@users_api_blueprint.route('/edit_lastname', methods=['POST'])
+@jwt_required
+def edit_lastname():
+    user_id = get_jwt_identity()
+    current_user = User.get_or_none(User.id==user_id)
+    errors = []
+    new_lastname = request.json.get('new_lastname')
+
+    update = User.update(last_name = new_lastname).where(User.id == current_user.id)
+
+    if update.execute():
+        responseObj = {
+            'status': 'success',
+            'message': 'Last name updated successfully',
+            'user': {"id": int(current_user.id), "username": current_user.username, "email": current_user.email, "first_name": current_user.first_name, "last_name": new_lastname, "hp_number": current_user.hp_number}
+        }
+
+        return jsonify(responseObj), 200
+    
+    else: 
+        responseObj = {
+            'status': 'failed',
+            'message': 'Last name failed to update'
+        }
+
+        return jsonify(responseObj), 400
+        
 @users_api_blueprint.route('/edit_password', methods = ['POST'])
 @jwt_required
 def edit_pw():
@@ -196,6 +250,33 @@ def edit_email():
             }
 
         return jsonify(responseObj), 400 
+
+@users_api_blueprint.route('/edit_hp', methods=['POST'])
+@jwt_required
+def edit_hp():
+    user_id = get_jwt_identity()
+    current_user = User.get_or_none(User.id==user_id)
+    errors = []
+    new_hp = request.json.get('new_hp')
+
+    update = User.update(hp_number = new_hp).where(User.id == current_user.id)
+
+    if update.execute():
+        responseObj = {
+            'status': 'success',
+            'message': 'Mobile phone number updated successfully',
+            'user': {"id": int(current_user.id), "username": current_user.username, "email": current_user.email, "first_name": current_user.first_name, "last_name": current_user.last_name, "hp_number": new_hp}
+        }
+
+        return jsonify(responseObj), 200
+    
+    else: 
+        responseObj = {
+            'status': 'failed',
+            'message': 'Mobile phone number failed to update'
+        }
+
+        return jsonify(responseObj), 400
 
 @users_api_blueprint.route('/current_user', methods = ['GET'])
 @jwt_required
