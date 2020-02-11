@@ -110,4 +110,28 @@ def history_delete(id):
 
         return jsonify(responseObj), 400
 
+@features_api_blueprint.route('/find_my_car', methods = ['POST'])
+@jwt_required
+def find():
+    user_id = get_jwt_identity()
+    history = History.select().where(user_id == user_id).order_by(History.id.desc())
+    latest = history[0]
+
+    if history: 
+        responseObj = {
+            'status': 'success',
+            'history': latest
+        }
+
+        return jsonify(responseObj), 200
+
+    else: 
+        responseObj = {
+            'status': 'failed',
+            'message': 'Failed to retrieve information!'
+        
+        }
+
+        return jsonify(responseObj), 400
+
 
