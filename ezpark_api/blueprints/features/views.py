@@ -43,7 +43,8 @@ def history():
                 'mall': Mall.get_by_id(Floor.get_by_id(Parking.get_by_id(history.parking_id).floor_id).mall_id).outlet,
                 'floor': Floor.get_by_id(Parking.get_by_id(history.parking_id).floor_id).floor,
                 'parking': Parking.get_by_id(history.parking_id).parking_num,
-                'start': history.created_at,
+                'date': history.created_at.strftime('%A %d %b %Y'),
+                'time': history.created_at.strftime('%X %p'),
                 'id': history.id
             }
             history_arr.append(history_list)
