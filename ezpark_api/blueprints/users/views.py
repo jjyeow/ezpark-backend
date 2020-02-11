@@ -197,5 +197,26 @@ def edit_email():
 
         return jsonify(responseObj), 400 
 
+@users_api_blueprint.route('current_user', methods = ['GET'])
+@jwt_required
+def current_user():
+    user_id = get_jwt_identity()
+    current_user = User.get_or_none(User.id == user_id)
+
+    if current_user: 
+        responseObj = {
+            'user': {"id": int(current_user.id), "username": current_user.username, "email": current_user.email, "first_name": current_user.first_name, "last_name": current_user.last_name, "hp_number": current_user.hp_number}
+        }
+
+        return jsonify(responseObj), 200
+
+    else: 
+        responseObj = {
+            'status': 'failed',
+            'message': 'Failed to retrieve user information'
+        }
+
+        return jsonify(responseObj), 400
+
 
 
