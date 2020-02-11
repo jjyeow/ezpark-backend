@@ -112,7 +112,7 @@ def history_delete(id):
 
         return jsonify(responseObj), 400
 
-@features_api_blueprint.route('/find_my_car', methods = ['POST'])
+@features_api_blueprint.route('/find_my_car', methods = ['GET'])
 @jwt_required
 def find():
     user_id = get_jwt_identity()
