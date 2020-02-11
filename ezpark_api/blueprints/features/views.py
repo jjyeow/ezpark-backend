@@ -115,12 +115,16 @@ def history_delete(id):
 def find():
     user_id = get_jwt_identity()
     history = History.select().where(user_id == user_id).order_by(History.id.desc())
-    latest = history[0]
-
+    
     if history: 
+        latest = history[0]
         responseObj = {
             'status': 'success',
-            'history': latest
+            'mall': Mall.get_by_id(Floor.get_by_id(Parking.get_by_id(latest.parking_id).floor_id).mall_id).outlet,
+            'floor': Floor.get_by_id(Parking.get_by_id(latest.parking_id).floor_id).floor,
+            'parking': Parking.get_by_id(latest.parking_id).parking_num,
+            'start': latest.created_at,
+            'id': latest.id
         }
 
         return jsonify(responseObj), 200
