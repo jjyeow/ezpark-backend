@@ -19,6 +19,10 @@ class User(BaseModel):
         if self.hp_number == "": 
             self.errors.append('Mobile phone number cannot be empty!')
 
+        duplicate_hp = User.get_or_none(User.hp_number == self.hp_number)
+        if duplicate_hp: 
+            self.errors.append('Mobile phone number has been used')
+
         duplicate_emails = User.get_or_none(User.email == self.email)
         if duplicate_emails:
             self.errors.append('Email has been used')
