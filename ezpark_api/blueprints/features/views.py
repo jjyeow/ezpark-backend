@@ -82,7 +82,7 @@ def history_delete(id):
     user_id = get_jwt_identity()
     history = History.get_by_id(id)
     if history.delete_instance():
-        history_obj = History.select().where(user_id == user_id)
+        history_obj = History.select().where(History.user_id == user_id)
         history_arr = []
         if history_obj: 
             for history in history_obj: 
@@ -116,7 +116,7 @@ def history_delete(id):
 @jwt_required
 def find():
     user_id = get_jwt_identity()
-    history = History.select().where(user_id == user_id).order_by(History.id.desc())
+    history = History.select().where(History.user_id == user_id).order_by(History.id.desc())
     
     if history: 
         latest = history[0]
