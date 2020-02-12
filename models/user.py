@@ -6,8 +6,8 @@ import re
 
 class User(BaseModel):
     username = pw.CharField(unique=True)
-    first_name = pw.CharField(unique=False)
-    last_name = pw.CharField(unique=False)
+    first_name = pw.CharField(unique=False, default="")
+    last_name = pw.CharField(unique=False, default="")
     password = pw.CharField(unique=False)
     email = pw.CharField(unique=True)
     hp_number = pw.CharField(unique=True)
