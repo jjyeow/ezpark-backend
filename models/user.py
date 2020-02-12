@@ -13,6 +13,12 @@ class User(BaseModel):
     hp_number = pw.CharField(unique=True)
 
     def validate(self):
+        if username == "": 
+            self.errors.append('Username cannot be empty!')
+    
+        if hp_number == "": 
+            self.errors.append('Mobile phone number cannot be empty!')
+
         duplicate_emails = User.get_or_none(User.email == self.email)
         if duplicate_emails:
             self.errors.append('Email has been used')

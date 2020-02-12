@@ -24,12 +24,6 @@ def create():
 
     user = User(username=username, email=email, first_name = first_name, last_name = last_name, password=password, hp_number=hp_number)
 
-    if username == "": 
-        user.errors.append('Username cannot be empty!')
-    
-    if hp_number == "": 
-        user.errors.append('Mobile phone number cannot be empty!')
-
     if user.save():
         # access_token
         responseObj = {
