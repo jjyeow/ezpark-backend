@@ -154,6 +154,8 @@ def layout():
         if len(floor_arr) != 0:
             responseObj = {
                 'status': 'success',
+                'mall': mall_inst.outlet,
+                'id': mall_inst.id,
                 'floor': floor_arr
             }
 
