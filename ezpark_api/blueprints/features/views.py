@@ -141,8 +141,38 @@ def find():
 
         return jsonify(responseObj), 400
 
-# @features_api_blueprint.route('/layout', methods = ['GET'])
-# def layout():
-#     mall = request.json.get()
+@features_api_blueprint.route('/layout', methods = ['GET'])
+def layout():
+    mall = request.json.get('mall')
+    mall_inst = Mall.get_or_none(outlet = mall)
+    floors = mall_inst.floor
+    floor_arr = []
+    for floor in floors: 
+        floor_arr.append(floor)
+
+    if mall_inst: 
+        if len(floor_arr) != 0:
+            responseObj = {
+                'status': 'success',
+                'floor': floor_arr
+            }
+
+            return jsonify(responseObj), 200
+
+        else: 
+            responseObj = {
+                'status': 'failed',
+                'message': 'No floor found in database for this mall!'
+            }
+
+            return jsonify(responseObj), 400
+    else: 
+        responseObj = {
+            'status': 'failed',
+            'message': 'Failed to access the mall layout'
+        }
+
+
+
 
 
