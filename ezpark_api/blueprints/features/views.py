@@ -172,7 +172,7 @@ def layout():
 @features_api_blueprint.route('/layout/id', methods = ['POST'])
 def layout_id():
     mall_id = request.json.get('mall_id')
-    mall_inst = Mall.get_or_none(Mall.id = mall_id)
+    mall_inst = Mall.get_by_id(mall_id)
     floors = mall_inst.floor
     floor_arr = []
     for floor in floors: 
