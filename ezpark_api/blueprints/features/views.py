@@ -141,7 +141,7 @@ def find():
 
         return jsonify(responseObj), 400
 
-@features_api_blueprint.route('/layout', methods = ['GET'])
+@features_api_blueprint.route('/layout', methods = ['POST'])
 def layout():
     mall = request.json.get('mall')
     mall_inst = Mall.get_or_none(outlet = mall)
