@@ -172,6 +172,7 @@ def layout():
             'message': 'Failed to access the mall layout'
         }
 
+        return jsonify(responseObj), 400
 
 
 
