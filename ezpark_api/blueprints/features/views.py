@@ -151,23 +151,44 @@ def layout():
         floor_arr.append(floor.floor)
 
     if mall_inst: 
-        if len(floor_arr) != 0:
-            responseObj = {
-                'status': 'success',
-                'mall': mall_inst.outlet,
-                'id': mall_inst.id,
-                'floor': floor_arr
-            }
+        responseObj = {
+            'status': 'success',
+            'mall': mall_inst.outlet,
+            'id': mall_inst.id,
+            'floor': floor_arr
+        }
 
-            return jsonify(responseObj), 200
+        return jsonify(responseObj), 200
 
-        else: 
-            responseObj = {
-                'status': 'failed',
-                'message': 'No floor found in database for this mall!'
-            }
 
-            return jsonify(responseObj), 400
+    else: 
+        responseObj = {
+            'status': 'failed',
+            'message': 'Failed to access the mall layout'
+        }
+
+        return jsonify(responseObj), 400
+
+@features_api_blueprint.route('/layout/id', methods = ['POST'])
+def layout_id():
+    mall_id = request.json.get('mall_id')
+    mall_inst = Mall.get_or_none(Mall.id = mall_id)
+    floors = mall_inst.floor
+    floor_arr = []
+    for floor in floors: 
+        floor_arr.append(floor.floor)
+
+    if mall_inst: 
+        responseObj = {
+            'status': 'success',
+            'mall': mall_inst.outlet,
+            'id': mall_inst.id,
+            'floor': floor_arr
+        }
+
+        return jsonify(responseObj), 200
+
+
     else: 
         responseObj = {
             'status': 'failed',
