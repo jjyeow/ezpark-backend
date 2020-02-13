@@ -148,7 +148,7 @@ def layout():
     floors = mall_inst.floor
     floor_arr = []
     for floor in floors: 
-        floor_arr.append(floor)
+        floor_arr.append(floor.floor)
 
     if mall_inst: 
         if len(floor_arr) != 0:
