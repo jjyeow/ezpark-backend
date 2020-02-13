@@ -175,15 +175,19 @@ def layout_id():
     mall_inst = Mall.get_by_id(mall_id)
     floors = mall_inst.floor
     floor_arr = []
+    parking_arr = []
     for floor in floors: 
         floor_arr.append(floor.floor)
+        for parking in floor.parking: 
+            parking_arr.append({"id": parking.id, "status": parking.status})
 
     if mall_inst: 
         responseObj = {
             'status': 'success',
             'mall': mall_inst.outlet,
             'id': mall_inst.id,
-            'floor': floor_arr
+            'floor': floor_arr,
+            'parking': parking_arr
         }
 
         return jsonify(responseObj), 200
