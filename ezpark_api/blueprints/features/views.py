@@ -175,11 +175,19 @@ def layout_id():
     mall_inst = Mall.get_by_id(mall_id)
     floors = mall_inst.floor
     floor_arr = []
+    floor_inst = []
     parking_arr = []
+    parking_arr2 = []
     for floor in floors: 
         floor_arr.append(floor.floor)
-        for parking in floor.parking: 
-            parking_arr.append({"id": parking.id, "status": parking.status})
+        for parking in floor.parking:
+            floor_inst.append(parking)
+         
+    for parking in floor_inst[0]: 
+        parking_arr.append({'id': parking.id, 'status': parking.status})
+
+    for parking in floor_inst[1]: 
+        parking_arr2.append({'id': parking.id, 'status': parking.status})
 
     if mall_inst: 
         responseObj = {
