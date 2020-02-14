@@ -197,7 +197,7 @@ def layout_id():
     user_id = get_jwt_identity()
     mall_id = request.json.get('mall_id')
     mall_inst = Mall.get_by_id(mall_id)
-    floors = mall_inst.floor
+    floors = Floor.select().where(Mall.mall_id == mall_id).order_by(Mall.id.asc())
     floor_arr = []
     parking_arr = []
     parking_arr1 = []
