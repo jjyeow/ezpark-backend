@@ -59,7 +59,6 @@ def ping(TRIGGER,ECHO):
     #GPIO.output(GPIO_TRIGGER2, False)
     #GPIO.output(GPIO_TRIGGER3, False)
     ################################
-    
     # send 10us pulse to trigger
     GPIO.output(TRIGGER, True)
     time.sleep(0.00001)
@@ -75,7 +74,6 @@ def ping(TRIGGER,ECHO):
     #StartTime3 = time.time()
     #StopTime3 = time.time()
     ############################
-    
     # set start/stop for each sensor
     StartTime = time.time()
     
@@ -92,7 +90,6 @@ def ping(TRIGGER,ECHO):
     #TimeElapsed2 = StopTime2 - StartTime2
     #TimeElapsed3 = StopTime3 - StartTime3
     #######################################
-        
     # time difference between start and arrival
     TimeElapsed = StopTime - StartTime
 
@@ -125,7 +122,7 @@ def run():
                     query.execute()
                     
             print("wait")
-            time.sleep(0.5)
+            time.sleep(0.1)
             
             #if dist <= 6:
             #    print ("Measured distance = %.1f cm" % dist)
