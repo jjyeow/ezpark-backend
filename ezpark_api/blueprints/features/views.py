@@ -195,7 +195,8 @@ def layout_id():
             'mall': mall_inst.outlet,
             'id': mall_inst.id,
             'floor': floor_arr,
-            'parking': parking_arr
+            'parking1': parking_arr,
+            'parking2': parking_arr2
         }
 
         return jsonify(responseObj), 200
