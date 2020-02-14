@@ -1,5 +1,6 @@
 import os
 import config
+import click
 from flask import Flask
 from models.base_model import db
 from flask_jwt_extended import JWTManager
@@ -26,3 +27,10 @@ def _db_close(exc):
         print(db)
         print(db.close())
     return exc
+
+@click.command()
+def pi():
+    from util import run
+    run()
+
+app.cli.add_command(pi)
