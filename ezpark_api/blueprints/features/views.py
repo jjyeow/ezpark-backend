@@ -65,9 +65,9 @@ def history():
         return jsonify(responseObj), 200
 
 
-@features_api_blueprint.route('/history_add', methods=['POST'])
+@features_api_blueprint.route('/history_add_multiple', methods=['POST'])
 @jwt_required
-def history_add():
+def history_add_multiple():
     user_id = get_jwt_identity()
     parking_id = [1,2,3,4,5,6,7,8]
 
@@ -75,6 +75,29 @@ def history_add():
         history_inst = History(user_id = user_id, parking_id = parking)
         history_inst.save()
     
+@features_api_blueprint.route('/history_add', methods = ['POST'])
+@jwt_required
+def history_add():
+    user_id = get_jwt_identity()
+    mall_id = request.json.get('mall_id')
+    parking_id = request.json.get('parking_id')
+    history_inst = History(user_id = user_id, parking_id = parking_id)
+
+    if history_inst.save():
+        responseObj = {
+            'status': 'success',
+            'message': 'Successfully saved your parking!'
+        }
+
+        return jsonify(responseObj), 200
+
+    else: 
+        responseObj = {
+                'status': 'failed',
+                'message': 'Parking failed to save!'
+        }
+
+        return jsonify(responseObj), 400
 
 @features_api_blueprint.route('/history_delete/<id>', methods=['POST'])
 @jwt_required
