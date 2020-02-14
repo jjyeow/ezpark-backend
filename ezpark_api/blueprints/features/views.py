@@ -175,6 +175,7 @@ def layout_id():
     mall_inst = Mall.get_by_id(mall_id)
     floors = mall_inst.floor
     floor_arr = []
+    parking_arr = []
     for floor in floors: 
         floor_arr.append(floor.floor)
         for parking in floor.parking:
