@@ -202,11 +202,19 @@ def layout_id():
     parking_arr = []
     for floor in floors: 
         floor_arr.append(floor.floor)
-        for parking in floor.parking:
-            parking_arr.append({"id": parking.id, "status": parking.status})
+        # for parking in floor.parking:
+        #     parking_arr.append({"id": parking.id, "status": parking.status})
+    floor1 = Floor.get_or_none(Floor.floor = floor_arr[0])
+    floor2 = Floor.get_or_none(Floor.floor = floor_arr[1])
+    parking1 = Parking.select().where(Parking.floor_id == floor1.id).order_by(Parking.id.asc())
+    parking2 = Parking.select().where(Parking.floor_id == floor2.id).order_by(Parking.id.asc())
+    for i in parking1:
+        parking_arr1.append({"id": i.id, "status": i.status}) 
+        
+    for i in parking2:
+        parking_arr2.append({"id": i.id, "status": i.status}) 
 
-    parking_arr1 = parking_arr[:4]
-    parking_arr2 = parking_arr[4:]
+     
 
     if mall_inst: 
         responseObj = {
