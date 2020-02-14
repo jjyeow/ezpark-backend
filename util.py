@@ -111,7 +111,7 @@ def run():
             #[dist, dist2, dist3] = distance()
             for i in range(3):
                 distance = ping(GPIO_TRIGGER[i], GPIO_ECHO[i])
-                print("sensor", i+1, ": ",distance,"cm")
+                #print("sensor", i+1, ": ",distance,"cm")
                 if distance <= 7:
                     GPIO.output(GPIO_LED[i], 1)
                     query = Parking.update(status = True).where(Parking.id == i+1) #sensor 1
@@ -121,7 +121,7 @@ def run():
                     query = Parking.update(status = False).where(Parking.id == i+1) #sensor 1
                     query.execute()
                     
-            print("wait")
+            #print("wait")
             time.sleep(0.1)
             
             #if dist <= 6:
