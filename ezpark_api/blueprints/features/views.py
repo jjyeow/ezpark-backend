@@ -204,13 +204,14 @@ def layout_id():
         floor_arr.append(floor.floor)
         # for parking in floor.parking:
         #     parking_arr.append({"id": parking.id, "status": parking.status})
-    floor1 = Floor.get_or_none(Floor.floor = floor_arr[0])
-    floor2 = Floor.get_or_none(Floor.floor = floor_arr[1])
+    floor1 = Floor.get_or_none(floor = floor_arr[0])
+    floor2 = Floor.get_or_none(floor = floor_arr[1])
     parking1 = Parking.select().where(Parking.floor_id == floor1.id).order_by(Parking.id.asc())
     parking2 = Parking.select().where(Parking.floor_id == floor2.id).order_by(Parking.id.asc())
+
     for i in parking1:
         parking_arr1.append({"id": i.id, "status": i.status}) 
-        
+
     for i in parking2:
         parking_arr2.append({"id": i.id, "status": i.status}) 
 
