@@ -79,7 +79,6 @@ def history_add_multiple():
 @jwt_required
 def history_add():
     user_id = get_jwt_identity()
-    mall_id = request.json.get('mall_id')
     parking_id = request.json.get('parking_id')
     history_inst = History(user_id = user_id, parking_id = parking_id)
 
