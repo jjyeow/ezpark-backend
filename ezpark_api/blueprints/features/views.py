@@ -170,7 +170,9 @@ def layout():
         return jsonify(responseObj), 400
 
 @features_api_blueprint.route('/layout/id', methods = ['POST'])
+@jwt_required
 def layout_id():
+    user_id = get_jwt_identity()
     mall_id = request.json.get('mall_id')
     mall_inst = Mall.get_by_id(mall_id)
     floors = mall_inst.floor
@@ -187,6 +189,7 @@ def layout_id():
     if mall_inst: 
         responseObj = {
             'status': 'success',
+            'user': user_id,
             'mall': mall_inst.outlet,
             'id': mall_inst.id,
             'floor': floor_arr,
