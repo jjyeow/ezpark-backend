@@ -9,10 +9,14 @@ from werkzeug.security import check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
 import re
+import nexmo
+import os
 
 features_api_blueprint = Blueprint('features_api',
                              __name__,
                              template_folder='templates')
+
+client = nexmo.Client(key=os.environ.get('NEXMO_API_KEY'), secret=os.environ.get('NEXMO_API_SECRET'))
 
 @features_api_blueprint.route('/', methods=['GET'])
 def index():
@@ -79,16 +83,32 @@ def history_add_multiple():
 @jwt_required
 def history_add():
     user_id = get_jwt_identity()
+    user_inst = User.get_by_id(user_id)
     parking_id = request.json.get('parking_id')
+    parking_inst = Parking.get_by_id(parking_id)
+    floor_inst = Floor.get_by_id(parking_inst.floor_id) 
+    mall_inst = Mall.get_by_id(floor_inst.mall_id)
     history_inst = History(user_id = user_id, parking_id = parking_id)
 
     if history_inst.save():
-        responseObj = {
-            'status': 'success',
-            'message': 'Successfully saved your parking!'
-        }
+        responseData = client.send_message({
+            'from': 'Nexmo',
+            'to': user_inst.hp_number, 
+            'text': 'RM0.00 EzPark: Your car is parked in Mall: [' + mall_inst.outlet + '], at Floor: [' + floor_inst.floor +  '], in Parking Bay: [' + parking_inst.parking_num + ']///'
+        })
 
-        return jsonify(responseObj), 200
+        if responseData["messages"][0]["status"] == "0":
+            responseObj = {
+                'status': 'success',
+                'message': 'Successfully saved your parking!'
+            }
+            return jsonify(responseObj), 200
+        else: 
+            responseObj = {
+                'status': 'failed',
+                'message': 'Message sent failed'
+            }
+            return jsonify(responseObj), 200
 
     else: 
         responseObj = {
@@ -240,6 +260,8 @@ def layout_id():
         }
 
         return jsonify(responseObj), 400
+    
+
 
 
 
