@@ -107,6 +107,7 @@ def ping(TRIGGER,ECHO):
 def run():
     # if __name__ == '__main__':
     try:
+        print("Starting...")
         while True:
             #[dist, dist2, dist3] = distance()
             for i in range(3):
