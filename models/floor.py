@@ -15,7 +15,7 @@ class Floor(BaseModel):
 
     def count_available(self):
         from models.parking import Parking
-        return len(Parking.select().where(Parking.floor_id == self.id and Parking.status == False))
+        return len(Parking.select().where(Parking.floor_id == self.id, Parking.status == False))
     # username = pw.CharField(unique=True)
     # first_name = pw.CharField(unique=False)
     # last_name = pw.CharField(unique=False)
