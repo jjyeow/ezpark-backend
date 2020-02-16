@@ -14,7 +14,7 @@ class BaseModel(pw.Model):
         self.validate()
 
         if len(self.errors) == 0:
-            self.updated_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now(tzlocal())
             return super(BaseModel, self).save(*args, **kwargs)
         else:
             return 0
