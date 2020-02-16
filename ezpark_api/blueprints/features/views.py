@@ -97,18 +97,18 @@ def history_add():
             'text': 'RM0.00 EzPark: Your car is parked in Mall: [' + mall_inst.outlet + '], at Floor: [' + floor_inst.floor +  '], in Parking Bay: [' + parking_inst.parking_num + ']///'
         })
 
-        if responseData["messages"][0]["status"] == "0":
-            responseObj = {
-                'status': 'success',
-                'message': 'Successfully saved your parking!'
-            }
-            return jsonify(responseObj), 200
-        else: 
-            responseObj = {
-                'status': 'failed',
-                'message': 'Message sent failed'
-            }
-            return jsonify(responseObj), 400
+        # if responseData["messages"][0]["status"] == "0":
+        responseObj = {
+            'status': 'success',
+            'message': 'Successfully saved your parking!'
+        }
+        return jsonify(responseObj), 200
+        # else: 
+        #     responseObj = {
+        #         'status': 'failed',
+        #         'message': 'Message sent failed'
+        #     }
+        #     return jsonify(responseObj), 400
 
     else: 
         responseObj = {
