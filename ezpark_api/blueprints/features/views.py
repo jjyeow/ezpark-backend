@@ -140,6 +140,7 @@ def history_delete(id):
 
         responseObj= {
             'status': 'success',
+            'message': 'Successfully deleted parking history for History ID: ' + history.id,
             'history': history_arr 
         }
 
