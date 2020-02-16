@@ -108,7 +108,7 @@ def history_add():
                 'status': 'failed',
                 'message': 'Message sent failed'
             }
-            return jsonify(responseObj), 200
+            return jsonify(responseObj), 400
 
     else: 
         responseObj = {
@@ -140,7 +140,7 @@ def history_delete(id):
 
         responseObj= {
             'status': 'success',
-            'message': 'Successfully deleted parking history for History ID: ' + history.id,
+            'message': 'Successfully deleted parking history!',
             'history': history_arr 
         }
 
