@@ -2,11 +2,12 @@ import os
 import peewee as pw
 import datetime
 from database import db
+from dateutil.tz import tzlocal
 
 
 class BaseModel(pw.Model):
-    created_at = pw.DateTimeField(default=datetime.datetime.now)
-    updated_at = pw.DateTimeField(default=datetime.datetime.now)
+    created_at = pw.DateTimeField(default=datetime.datetime.now(tzlocal()))
+    updated_at = pw.DateTimeField(default=datetime.datetime.now(tzlocal()))
 
     def save(self, *args, **kwargs):
         self.errors = []
