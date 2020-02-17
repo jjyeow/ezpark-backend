@@ -178,14 +178,13 @@ def find():
     else: 
         responseObj = {
             'status': 'success',
-            'message': 'No parking information!'
+            'message': 'No parking information!',
             'mall': 'N/A',
             'floor': 'N/A',
             'parking': 'N/A',
             'date': 'N/A',
             'time': 'N/A',
-            'id': 'N/A',
-        
+            'id': 'N/A'
         }
 
         return jsonify(responseObj), 200
