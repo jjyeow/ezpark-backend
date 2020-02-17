@@ -97,18 +97,18 @@ def history_add():
             'text': 'RM0.00 EzPark: Your car is parked in Mall: [' + mall_inst.outlet + '], at Floor: [' + floor_inst.floor +  '], in Parking Bay: [' + parking_inst.parking_num + ']///'
         })
 
-        if responseData["messages"][0]["status"] == "0":
-            responseObj = {
-                'status': 'success',
-                'message': 'Successfully saved your parking!'
-            }
-            return jsonify(responseObj), 200
-        else: 
-            responseObj = {
-                'status': 'failed',
-                'message': 'Message sent failed'
-            }
-            return jsonify(responseObj), 200
+        # if responseData["messages"][0]["status"] == "0":
+        responseObj = {
+            'status': 'success',
+            'message': 'Successfully saved your parking!'
+        }
+        return jsonify(responseObj), 200
+        # else: 
+        #     responseObj = {
+        #         'status': 'failed',
+        #         'message': 'Message sent failed'
+        #     }
+        #     return jsonify(responseObj), 400
 
     else: 
         responseObj = {
@@ -140,6 +140,7 @@ def history_delete(id):
 
         responseObj= {
             'status': 'success',
+            'message': 'Successfully deleted parking history!',
             'history': history_arr 
         }
 
@@ -219,11 +220,13 @@ def layout_id():
     mall_inst = Mall.get_by_id(mall_id)
     floors = Floor.select().where(Floor.mall_id == mall_inst.id).order_by(Floor.id.asc())
     floor_arr = []
+    amount_arr = []
     parking_arr = []
     parking_arr1 = []
     parking_arr2 = []
     for floor in floors: 
         floor_arr.append(floor.floor)
+        amount_arr.append(' ('+str(floor.count_available())+')')
         # for parking in floor.parking:
         #     parking_arr.append({"id": parking.id, "status": parking.status})
     floor1 = Floor.get_or_none(floor = floor_arr[0])
@@ -237,8 +240,6 @@ def layout_id():
     for i in parking2:
         parking_arr2.append({"id": i.id, "status": i.status}) 
 
-     
-
     if mall_inst: 
         responseObj = {
             'status': 'success',
@@ -247,7 +248,8 @@ def layout_id():
             'id': mall_inst.id,
             'floor': floor_arr,
             'parking1': parking_arr1,
-            'parking2': parking_arr2
+            'parking2': parking_arr2,
+            'amount': amount_arr 
         }
 
         return jsonify(responseObj), 200
