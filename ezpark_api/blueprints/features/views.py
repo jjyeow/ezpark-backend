@@ -178,11 +178,11 @@ def find():
     else: 
         responseObj = {
             'status': 'failed',
-            'message': 'Failed to retrieve information!'
+            'message': 'No parking information!'
         
         }
 
-        return jsonify(responseObj), 400
+        return jsonify(responseObj), 200
 
 @features_api_blueprint.route('/layout', methods = ['POST'])
 def layout():
