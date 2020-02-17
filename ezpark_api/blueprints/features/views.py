@@ -177,8 +177,14 @@ def find():
 
     else: 
         responseObj = {
-            'status': 'failed',
+            'status': 'success',
             'message': 'No parking information!'
+            'mall': 'N/A',
+            'floor': 'N/A',
+            'parking': 'N/A',
+            'date': 'N/A',
+            'time': 'N/A',
+            'id': 'N/A',
         
         }
 
