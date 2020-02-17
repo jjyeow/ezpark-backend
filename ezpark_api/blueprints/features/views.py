@@ -20,7 +20,7 @@ client = nexmo.Client(key=os.environ.get('NEXMO_API_KEY'), secret=os.environ.get
 
 @features_api_blueprint.route('/', methods=['GET'])
 def index():
-    malls = Mall.select()
+    malls = Mall.select().order_by(Mall.id.asc())
     malls_name_arr = [] 
     for mall in malls:
         malls_name_arr.append({"name": mall.outlet})

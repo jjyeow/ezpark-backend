@@ -258,25 +258,43 @@ def edit_hp():
     current_user = User.get_or_none(User.id==user_id)
     errors = []
     new_hp = request.json.get('new_hp')
-
-    update = User.update(hp_number = new_hp).where(User.id == current_user.id)
-
-    if update.execute():
+    duplicate_hp_num = User.get_or_none(hp_number = new_hp)
+    
+    if duplicate_hp_num: 
+        errors.append('Mobile phone number has been taken!')
         responseObj = {
-            'status': 'success',
-            'message': 'Mobile phone number updated successfully',
-            'user': {"id": int(current_user.id), "username": current_user.username, "email": current_user.email, "first_name": current_user.first_name, "last_name": current_user.last_name, "hp_number": new_hp}
+            'status': 'failed',
+            'message': errors
         }
+        return jsonify(responseObj), 400
+    
+    if len(errors) == 0:
+        update = User.update(hp_number = new_hp).where(User.id == current_user.id)
+        if update.execute():
+            responseObj = {
+                'status': 'success',
+                'message': 'Mobile phone number updated successfully',
+                'user': {"id": int(current_user.id), "username": current_user.username, "email": current_user.email, "first_name": current_user.first_name, "last_name": current_user.last_name, "hp_number": new_hp}
+            }
 
-        return jsonify(responseObj), 200
+            return jsonify(responseObj), 200
+    
+        else: 
+            responseObj = {
+                'status': 'failed',
+                'message': 'Mobile phone number failed to update'
+            }
+
+            return jsonify(responseObj), 400
     
     else: 
         responseObj = {
-            'status': 'failed',
-            'message': 'Mobile phone number failed to update'
-        }
+                'status': 'failed',
+                'message': errors
+            }
 
-        return jsonify(responseObj), 400
+        return jsonify(responseObj), 400 
+
 
 @users_api_blueprint.route('/current_user', methods = ['GET'])
 @jwt_required
